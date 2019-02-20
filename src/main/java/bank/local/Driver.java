@@ -6,10 +6,8 @@
 package bank.local;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import bank.InactiveException;
 import bank.OverdrawException;
@@ -40,21 +38,28 @@ public class Driver implements bank.BankDriver {
 
 		@Override
 		public Set<String> getAccountNumbers() {
-			System.out.println("Bank.getAccountNumbers has to be implemented");
-			return new HashSet<String>(); // TODO has to be replaced
+			return accounts.values().stream().filter(a -> a.isActive()).map(a -> a.getNumber()).collect(Collectors.toSet());
 		}
 
 		@Override
 		public String createAccount(String owner) {
-			// TODO has to be implemented
-			System.out.println("Bank.createAccount has to be implemented");
-			return null;
+			Account temp = new Account(owner,  "10-"+accounts.size()+"-0");
+			accounts.put(temp.getNumber(), temp);
+			return temp.getNumber();
 		}
 
 		@Override
 		public boolean closeAccount(String number) {
-			// TODO has to be implemented
-			System.out.println("Bank.closeAccount has to be implemented");
+			if (accounts.containsKey(number)){
+				if (accounts.get(number).getBalance() == 0.0){
+					if (accounts.get(number).isActive()){
+						accounts.get(number).active = false;
+						return true;
+					}
+
+				}
+			}
+
 			return false;
 		}
 
@@ -66,8 +71,14 @@ public class Driver implements bank.BankDriver {
 		@Override
 		public void transfer(bank.Account from, bank.Account to, double amount)
 				throws IOException, InactiveException, OverdrawException {
-			// TODO has to be implemented
-			System.out.println("Bank.transfer has to be implemented");
+			from.withdraw(amount);
+			try {
+				to.deposit(amount);
+			}catch(InactiveException e){
+				from.deposit(amount);
+				System.out.println("unable to transfer money, TO-Acc is inactive");
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -78,10 +89,12 @@ public class Driver implements bank.BankDriver {
 		private double balance;
 		private boolean active = true;
 
-		Account(String owner) {
+		Account(String owner, String number) {
 			this.owner = owner;
-			// TODO account number has to be set here or has to be passed using the constructor
+			this.number = number;
+			this.balance = 0;
 		}
+
 
 		@Override
 		public double getBalance() {
@@ -104,15 +117,25 @@ public class Driver implements bank.BankDriver {
 		}
 
 		@Override
-		public void deposit(double amount) throws InactiveException {
-			// TODO has to be implemented
-			System.out.println("Account.deposit has to be implemented");
+		public void deposit(double amount) throws InactiveException, IllegalArgumentException {
+			if (!isActive()){
+				throw new InactiveException("account is not active");
+			}
+			if (amount < 0){
+				throw new IllegalArgumentException("no negative deposit");
+			}
+			balance += Math.abs(amount);
 		}
 
 		@Override
 		public void withdraw(double amount) throws InactiveException, OverdrawException {
-			// TODO has to be implemented
-			System.out.println("Account.withdraw has to be implemented");
+			if (!isActive()){
+				throw new InactiveException("account not active");
+			}
+			if (balance < Math.abs(amount)){
+				throw new OverdrawException("this is no Kontokorrent, you lack money");
+			}
+			balance -= Math.abs(amount);
 		}
 
 	}
