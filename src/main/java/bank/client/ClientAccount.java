@@ -1,4 +1,4 @@
-package bank.sockets;
+package bank.client;
 
 import bank.Account;
 import bank.InactiveException;
@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * Created by Geryones on 25/02/2019.
  */
-public class SocketAccount implements Account {
+public class ClientAccount implements Account {
     private String number;
     private String owner;
 

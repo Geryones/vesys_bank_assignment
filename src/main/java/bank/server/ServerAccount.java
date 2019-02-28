@@ -11,7 +11,7 @@ public class ServerAccount implements Account {
     private boolean active = true;
 
 
-    ServerAccount(String owner, String number) {
+    public ServerAccount(String owner, String number) {
         this.owner = owner;
         this.number = number;
         this.balance = 0;

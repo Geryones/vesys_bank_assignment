@@ -1,9 +1,10 @@
 package bank.server;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import bank.Request;
+import bank.command.CreateAccount;
+import bank.command.GetAccountNumbers;
+
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -19,7 +20,7 @@ public class ServerV1 {
             ExecutorService pool = Executors.newCachedThreadPool();
             while (true) {
                 Socket s = server.accept();
-                pool.execute(new Task(s));
+                pool.execute(new Handler(s));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -27,25 +28,42 @@ public class ServerV1 {
     }
 
     //daraus wird der bank server gebaut
-    private static class Task implements Runnable {
+    private static class Handler implements Runnable {
         private final Socket s;
+        private ServerBank serverBank;
+        private final ObjectOutputStream out;
+        private final ObjectInputStream in;
 
-        Task(Socket socket) {
+
+        Handler(Socket socket) throws IOException {
             this.s = socket;
+            out = new ObjectOutputStream(s.getOutputStream());
+            in = new ObjectInputStream(s.getInputStream());
         }
 
         public void run() {
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-                 PrintWriter out = new PrintWriter(s.getOutputStream(), true)) {
+            try {
 
-                String input = in.readLine();
-                while (input != null && !"".equals(input)) {
-                    out.println(input);
-                    input = in.readLine();
+                while (in != null && !"".equals(in)) {
+                    Object obj = in.readObject();
+
+                    if (obj instanceof CreateAccount){
+                        ((CreateAccount) obj).setAccountNumber(
+                                serverBank.createAccount(((CreateAccount) obj).getOwner()));
+                        out.writeObject(obj);
+                    }else if (obj instanceof GetAccountNumbers){
+                        ((GetAccountNumbers) obj).setAccountNumbers(
+                                serverBank.getAccountNumbers()
+                        );
+                        out.writeObject(obj);
+                    }
+
                 }
                 System.out.println("done serving " + s);
                 s.close();
-            } catch (IOException e) {
+                in.close();
+                out.close();
+            } catch (IOException | ClassNotFoundException e) {
                 System.err.println(e);
             }
         }

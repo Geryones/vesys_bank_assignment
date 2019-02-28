@@ -85,7 +85,7 @@ import javafx.util.StringConverter;
  * 
  * <pre>
  * java bank.ClientFX bank.local.Driver
- * java bank.ClientFX bank.sockets.Driver localhost 1234
+ * java bank.ClientFX bank.client.Driver localhost 1234
  * </pre>
  * 
  * If this program is started without arguments, then a list with runtime arguments is shown.
@@ -381,7 +381,7 @@ public class Client {
 		MenuItem about = new MenuItem("About...");
 		menu.getItems().add(about);
 		about.setOnAction(e ->
-			showInfo("About Bank Client", "Distributed Systems BankClient\n\n© D. Gruntz & D. Kröni, 2019")
+			showInfo("About Bank ClientBank", "Distributed Systems BankClient\n\n© D. Gruntz & D. Kröni, 2019")
 		);
 		return menu;
 	}
