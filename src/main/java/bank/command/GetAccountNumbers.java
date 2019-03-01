@@ -4,7 +4,7 @@ import bank.Request;
 
 import java.util.Set;
 
-public class GetAccountNumbers implements Request {
+public class GetAccountNumbers extends AbstractRequest implements Request {
 
     private Set<String> accountNumbers;
 

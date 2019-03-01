@@ -1,4 +1,7 @@
 package bank.command;
 
-public class Transfer {
+import bank.Request;
+
+
+public class Transfer extends AbstractRequest implements Request {
 }

@@ -1,4 +1,6 @@
 package bank.command;
 
-public class GetOwner {
+import bank.Request;
+
+public class GetOwner extends AbstractRequest implements Request {
 }

@@ -21,6 +21,7 @@ public class Driver implements BankDriver {
         port = Integer.parseInt(args[1]);
         server = args[0];
         s = new Socket(server, port);
+        bank = new ClientBank(s);
         System.out.println("connected");
     }
 

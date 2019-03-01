@@ -4,17 +4,20 @@ import bank.Account;
 import bank.InactiveException;
 import bank.OverdrawException;
 
-public class ServerAccount implements Account {
+import java.io.Serializable;
+
+public class ServerAccount implements Account{
     private String number;
     private String owner;
     private double balance;
-    private boolean active = true;
+    private boolean active;
 
 
     public ServerAccount(String owner, String number) {
         this.owner = owner;
         this.number = number;
         this.balance = 0;
+        this.active = true;
     }
 
 

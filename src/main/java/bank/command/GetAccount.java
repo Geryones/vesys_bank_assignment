@@ -1,28 +1,41 @@
 package bank.command;
 
+import bank.Account;
 import bank.Request;
 
-public class GetAccount implements Request {
-    private String owner;
-    private String number;
+import java.io.IOException;
+
+public class GetAccount extends AbstractRequest implements Request {
+
+    private double balance;
+    private boolean active;
 
     public GetAccount(String number) {
-        this.number = number;
+        setNumber(number);
+
     }
 
-    public String getOwner() {
-        return owner;
+    public GetAccount(Account serverAccount) throws IOException {
+        this.balance = serverAccount.getBalance();
+        this.active = serverAccount.isActive();
+        setOwner(serverAccount.getOwner());
+        setNumber(serverAccount.getNumber());
+
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public double getBalance() {
+        return balance;
     }
 
-    public String getNumber() {
-        return number;
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

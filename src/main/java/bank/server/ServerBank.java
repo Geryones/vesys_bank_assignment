@@ -10,11 +10,20 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ServerBank implements Bank {
+    private static final ServerBank instance = new ServerBank();
+    private ServerBank(){}
+    public static ServerBank getInstance(){
+        return instance;
+    }
+
     private final Map<String, ServerAccount> accounts = new HashMap<>();
 
     @Override
     public Set<String> getAccountNumbers() {
-        return accounts.values().stream().filter(a -> a.isActive()).map(a -> a.getNumber()).collect(Collectors.toSet());
+        return accounts.values().stream().filter(
+                a -> a.isActive()).map(
+                        a -> a.getNumber()).collect(
+                                Collectors.toSet());
     }
 
     @Override
@@ -48,13 +57,9 @@ public class ServerBank implements Bank {
     public void transfer(bank.Account from, bank.Account to, double amount)
             throws IOException, InactiveException, OverdrawException {
         from.withdraw(amount);
-        try {
-            to.deposit(amount);
-        }catch(InactiveException e){
-            from.deposit(amount);
-            System.out.println("unable to transfer money, TO-Acc is inactive");
-            e.printStackTrace();
-        }
+
+        to.deposit(amount);
+
     }
 
 }

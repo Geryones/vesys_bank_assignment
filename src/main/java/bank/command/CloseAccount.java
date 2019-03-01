@@ -2,22 +2,15 @@ package bank.command;
 
 import bank.Request;
 
-public class CloseAccount implements Request {
+public class CloseAccount extends AbstractRequest implements Request {
 
-    private String accountNumber;
     private boolean removed;
 
-    public CloseAccount(String accountNumber) {
-        this.accountNumber = accountNumber;
+    public CloseAccount(String number) {
+        setNumber(number);
+        removed = false;
     }
 
-    public String getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
-    }
 
     public boolean isRemoved() {
         return removed;
