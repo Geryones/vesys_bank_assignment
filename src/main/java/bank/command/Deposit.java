@@ -1,8 +1,12 @@
 package bank.command;
 
-import bank.Request;
+import bank.Bank;
+import bank.Command;
+import bank.InactiveException;
 
-public class Deposit extends AbstractRequest implements Request {
+import java.io.IOException;
+
+public class Deposit extends AbstractCommand implements Command {
     private double amount;
 
     public Deposit(String number, double amount) {
@@ -17,5 +21,23 @@ public class Deposit extends AbstractRequest implements Request {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    @Override Object execute(Bank bank) throws Exception {
+        bank.getAccount(getNumber()).deposit(amount);
+        return this;
+    }
+
+    @Override public void throwException() throws IOException,
+            IllegalArgumentException, InactiveException  {
+        if (getException() instanceof IOException){
+            throw (IOException)getException();
+        }
+        if (getException() instanceof InactiveException){
+            throw (InactiveException)getException();
+        }
+        if (getException() instanceof IllegalArgumentException){
+            throw (IllegalArgumentException) getException();
+        }
     }
 }

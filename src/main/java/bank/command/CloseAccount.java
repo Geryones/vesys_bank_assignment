@@ -1,23 +1,22 @@
 package bank.command;
 
-import bank.Request;
+import bank.Bank;
+import bank.Command;
 
-public class CloseAccount extends AbstractRequest implements Request {
+public class CloseAccount extends AbstractCommand implements Command {
+    private boolean closed = true;
 
-    private boolean removed;
-
-    public CloseAccount(String number) {
+    public CloseAccount(String number){
         setNumber(number);
-        removed = false;
     }
 
-
-    public boolean isRemoved() {
-        return removed;
+    @Override Object execute(Bank bank) throws Exception {
+        closed = bank.closeAccount(getNumber());
+        return this;
     }
 
-    public void setRemoved(boolean removed) {
-        this.removed = removed;
+    public boolean isClosed() {
+        return closed;
     }
 }
 

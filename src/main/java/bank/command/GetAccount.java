@@ -1,41 +1,38 @@
 package bank.command;
 
+
 import bank.Account;
-import bank.Request;
+import bank.Bank;
+import bank.Command;
 
 import java.io.IOException;
 
-public class GetAccount extends AbstractRequest implements Request {
-
-    private double balance;
-    private boolean active;
+public class GetAccount extends AbstractCommand implements Command {
+    private boolean exists = true;
 
     public GetAccount(String number) {
         setNumber(number);
 
     }
 
-    public GetAccount(Account serverAccount) throws IOException {
-        this.balance = serverAccount.getBalance();
-        this.active = serverAccount.isActive();
-        setOwner(serverAccount.getOwner());
-        setNumber(serverAccount.getNumber());
+    private void copyAccount(Account account){
+        try {
+            setOwner(account.getOwner());
+        }catch (IOException e){
+            setException(e);
+        }
 
     }
 
-    public double getBalance() {
-        return balance;
+    @Override Object execute(Bank bank) throws Exception {
+        if (bank.getAccount(getNumber()) != null){
+            copyAccount(bank.getAccount(getNumber()));
+        }else {
+            exists = false;
+        }
+        return this;
     }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
+    public boolean doesExist(){
+        return exists;
     }
 }

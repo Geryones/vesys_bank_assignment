@@ -1,9 +1,10 @@
 package bank.command;
 
-import bank.Request;
+import bank.Bank;
+import bank.Command;
 
-public class IsActive extends AbstractRequest implements Request {
-    private boolean isActive = false;
+public class IsActive extends AbstractCommand implements Command {
+    private boolean isActive;
 
     public IsActive(String number) {
         setNumber(number);
@@ -15,5 +16,10 @@ public class IsActive extends AbstractRequest implements Request {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    @Override Object execute(Bank bank) throws Exception {
+        setActive(bank.getAccount(getNumber()).isActive());
+        return this;
     }
 }

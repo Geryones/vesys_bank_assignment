@@ -1,10 +1,11 @@
 package bank.command;
 
-import bank.Request;
+import bank.Bank;
+import bank.Command;
 
 import java.util.Set;
 
-public class GetAccountNumbers extends AbstractRequest implements Request {
+public class GetAccountNumbers extends AbstractCommand implements Command {
 
     private Set<String> accountNumbers;
 
@@ -15,8 +16,9 @@ public class GetAccountNumbers extends AbstractRequest implements Request {
         return accountNumbers;
     }
 
-    public void setAccountNumbers(Set<String> accountNumbers) {
-        this.accountNumbers = accountNumbers;
-    }
 
+    @Override Object execute(Bank bank) throws Exception {
+        accountNumbers = bank.getAccountNumbers();
+        return this;
+    }
 }

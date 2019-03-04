@@ -1,8 +1,9 @@
 package bank.command;
 
-import bank.Request;
+import bank.Bank;
+import bank.Command;
 
-public class GetBalance extends AbstractRequest implements Request {
+public class GetBalance extends AbstractCommand implements Command {
 
     private double balance;
 
@@ -15,7 +16,10 @@ public class GetBalance extends AbstractRequest implements Request {
         return balance;
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
+
+
+    @Override Object execute(Bank bank) throws Exception {
+        balance = bank.getAccount(getNumber()).getBalance();
+        return this;
     }
 }

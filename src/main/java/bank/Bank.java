@@ -37,7 +37,7 @@ public interface Bank {
 
 	/**
 	 * Closes an account. Only accounts with balance zero may be closed.
-	 * Calling method <code>isActive</code> on a closed account will
+	 * Calling method <code>isClosed</code> on a closed account will
 	 * return <code>false</code>. As result, the method returns whether the
 	 * account could be closed or not.
 	 * 

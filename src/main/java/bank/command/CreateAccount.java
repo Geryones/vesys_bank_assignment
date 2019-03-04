@@ -1,15 +1,17 @@
 package bank.command;
 
-import bank.Request;
+import bank.Bank;
+import bank.Command;
 
 
-
-public class CreateAccount extends AbstractRequest implements Request {
+public class CreateAccount extends AbstractCommand implements Command {
 
     public CreateAccount(String owner) {
        setOwner(owner);
     }
 
-
-
+    @Override Object execute(Bank bank) throws Exception {
+        this.setNumber(bank.createAccount(getOwner()));
+        return this;
+    }
 }
