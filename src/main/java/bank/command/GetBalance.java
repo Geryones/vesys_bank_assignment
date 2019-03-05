@@ -3,7 +3,7 @@ package bank.command;
 import bank.Bank;
 import bank.Command;
 
-public class GetBalance extends AbstractCommand implements Command {
+public class GetBalance extends AbstractCommand {
 
     private double balance;
 

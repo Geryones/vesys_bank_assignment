@@ -4,7 +4,7 @@ import bank.*;
 
 import java.io.IOException;
 
-public class Transfer extends AbstractCommand implements Command {
+public class Transfer extends AbstractCommand {
     private String accountNumberFrom, accountNumberTo;
     private double amount;
 

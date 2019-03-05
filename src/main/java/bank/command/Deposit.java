@@ -6,7 +6,7 @@ import bank.InactiveException;
 
 import java.io.IOException;
 
-public class Deposit extends AbstractCommand implements Command {
+public class Deposit extends AbstractCommand {
     private double amount;
 
     public Deposit(String number, double amount) {

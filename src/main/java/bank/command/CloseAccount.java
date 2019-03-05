@@ -3,7 +3,7 @@ package bank.command;
 import bank.Bank;
 import bank.Command;
 
-public class CloseAccount extends AbstractCommand implements Command {
+public class CloseAccount extends AbstractCommand {
     private boolean closed = true;
 
     public CloseAccount(String number){

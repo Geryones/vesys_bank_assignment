@@ -11,7 +11,7 @@ public abstract class AbstractCommand implements Command {
 
     abstract Object execute(Bank bank) throws Exception;
 
-    public Object handle(Bank bank){
+    public final Object handle(Bank bank){
         try {
             Object result = execute(bank);
             this.result = result;

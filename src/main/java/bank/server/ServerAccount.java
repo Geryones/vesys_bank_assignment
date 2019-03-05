@@ -7,8 +7,8 @@ import bank.OverdrawException;
 import java.io.Serializable;
 
 public class ServerAccount implements Account{
-    private String number;
-    private String owner;
+    private final String number;
+    private final String owner;
     private double balance;
     private boolean active;
 

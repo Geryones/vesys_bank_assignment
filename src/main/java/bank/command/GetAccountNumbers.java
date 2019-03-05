@@ -5,7 +5,7 @@ import bank.Command;
 
 import java.util.Set;
 
-public class GetAccountNumbers extends AbstractCommand implements Command {
+public class GetAccountNumbers extends AbstractCommand {
 
     private Set<String> accountNumbers;
 

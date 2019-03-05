@@ -7,7 +7,7 @@ import bank.Command;
 
 import java.io.IOException;
 
-public class GetAccount extends AbstractCommand implements Command {
+public class GetAccount extends AbstractCommand {
     private boolean exists = true;
 
     public GetAccount(String number) {

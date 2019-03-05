@@ -7,7 +7,7 @@ import bank.OverdrawException;
 
 import java.io.IOException;
 
-public class Withdraw extends AbstractCommand implements Command {
+public class Withdraw extends AbstractCommand{
 
     private double amount;
 

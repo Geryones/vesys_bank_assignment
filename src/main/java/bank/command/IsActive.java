@@ -3,7 +3,7 @@ package bank.command;
 import bank.Bank;
 import bank.Command;
 
-public class IsActive extends AbstractCommand implements Command {
+public class IsActive extends AbstractCommand {
     private boolean isActive;
 
     public IsActive(String number) {

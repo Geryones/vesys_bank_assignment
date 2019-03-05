@@ -14,8 +14,8 @@ import java.io.ObjectOutputStream;
  * Created by Geryones on 25/02/2019.
  */
 public class ClientAccount implements Account {
-    private String number;
-    private String owner;
+    private final String number;
+    private final String owner;
 
 
     public ClientAccount(String number, String owner) {
@@ -24,11 +24,11 @@ public class ClientAccount implements Account {
 
     }
 
-    @Override public String getNumber() throws IOException {
+    @Override public String getNumber(){
         return number;
     }
 
-    @Override public String getOwner() throws IOException {
+    @Override public String getOwner(){
         return owner;
     }
 

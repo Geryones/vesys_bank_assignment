@@ -4,7 +4,7 @@ import bank.Bank;
 import bank.Command;
 
 
-public class CreateAccount extends AbstractCommand implements Command {
+public class CreateAccount extends AbstractCommand {
 
     public CreateAccount(String owner) {
        setOwner(owner);

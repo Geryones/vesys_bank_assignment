@@ -15,8 +15,6 @@ public class ClientBank implements Bank{
 
     private final Map<String, ClientAccount> accounts = new HashMap<>();
 
-
-
     @Override public String createAccount(String owner) throws IOException {
         Command createAccount = new CreateAccount(owner);
         CreateAccount response = (CreateAccount) Driver.request(createAccount);

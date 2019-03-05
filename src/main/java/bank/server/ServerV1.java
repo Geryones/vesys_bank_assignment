@@ -44,7 +44,7 @@ public class ServerV1 {
         public void run() {
             try {
 
-                while (in != null && !"".equals(in)) {
+                while (in != null) {
 
                     Command command = (Command) in.readObject();
                     out.writeObject(command.handle(bank));
